@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 
 export default ({users}) => {
-  return<Container>
+  return <Container>
     {users && users.map( (user, index) => {
       return <UserSection key={index}>
         <b>name:</b>&nbsp;{user.name}

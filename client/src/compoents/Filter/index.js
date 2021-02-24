@@ -12,15 +12,13 @@ import {
 
 
 export default ({props}) => {
-  const { setFilter, filter } = props;
+  const { setFilter, _ } = props;
 
   const [form, setForm] = useState({
     username: '',
     email: '',
-    company: false,
+    notInCompany: false,
   })
-
-  console.log(form.company)
 
   return <Container>
     <Button
@@ -49,24 +47,34 @@ export default ({props}) => {
 
     <FormControlLabel
       style={{marginTop: "10px"}}
-      control={<Checkbox checked={form.company} onChange={ () => setForm({...form, company: !form.company}) } name="checkedA" />}
-      label="is in company?"
+      control={
+        <Checkbox
+          checked={form.notInCompany}
+          onChange={ () => setForm({...form, notInCompany: !form.notInCompany}) }
+        />
+      }
+      label="Not in company"
       color="primary"
     />
 
-    <CurrentFilter>
-      <Section>Username: {form.username}</Section>
-      <Section>Email: {form.email}</Section>
-      <Section>In company: {`${form.company}`}</Section>
-      <RemoveFilter 
-      onClick={ () => {
-        setForm({...form, username: '', email: '', company: false})
-        setFilter(form)
-      }}>
-        RemoveFilter
-        <BackspaceIcon style={{marginLeft: "25px"}}/>
-      </RemoveFilter>
-    </CurrentFilter>
+    {form.username || form.email || form.notInCompany ?
+      <CurrentFilter>
+        <Section>Username: {form.username}</Section>
+        <Section>Email: {form.email}</Section>
+        <Section>Not in company: {`${form.notInCompany}`}</Section>
+        <RemoveFilter
+          onClick={ () => {
+            setForm({...form, username: '', email: '', company: false})
+            setFilter(form)
+          }}
+        >
+          RemoveFilter
+          <BackspaceIcon style={{marginLeft: "25px"}}/>
+        </RemoveFilter>
+      </CurrentFilter>
+      :
+      <h1>No filters here</h1>
+    }
 
   </Container>
 }

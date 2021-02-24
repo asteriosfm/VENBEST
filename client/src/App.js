@@ -14,8 +14,12 @@ const getData = async () => {
       'Content-type': 'application/json; charset=UTF-8',
     },
   })
-  return await response.json()
+  return await response.json();
 };
+
+const encoded = (a, b) => {
+  return a.slice(0, b.length) === b;
+}
 
 export default () => {
 const [users, setUsers] = useState([]);
@@ -26,23 +30,26 @@ const filteredUsres = () => {
 
   if (filter.username) {
     fliteredByUsername = users.filter(user => {
-      return user.username === filter.username
+      return encoded(user.username, filter.username)
     })
-    if (filter.company) {
-      fliteredByUsername = fliteredByUsername.filter( user => !!user.company === true)
+    if (filter.notInCompany) {
+      fliteredByUsername = fliteredByUsername.filter(user => !!user.company.name.length !== true)
     }
   }
 
   if (filter.email) {
     fliteredByEmail = users.filter(user => {
-      return user.email === filter.email
+      return encoded(user.email, filter.email)
     })
-    if (filter.company) {
-      fliteredByEmail = fliteredByEmail.filter( user => !!user.company === true)
+    if (filter.notInCompany) {
+      fliteredByEmail = fliteredByEmail.filter(user => !!user.company.name.length !== true)
     }
   }
 
   if (!fliteredByEmail && !fliteredByUsername) {
+    if (filter.notInCompany) {
+      return users.filter(user => !!user.company.name.length !== true)
+    }
     return users
   }
   
