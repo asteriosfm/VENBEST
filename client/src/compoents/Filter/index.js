@@ -57,7 +57,7 @@ export default ({props}) => {
     <CurrentFilter>
       <Section>Username: {form.username}</Section>
       <Section>Email: {form.email}</Section>
-      <Section>In company: {form.company}</Section>
+      <Section>In company: {`${form.company}`}</Section>
       <RemoveFilter 
       onClick={ () => {
         setForm({...form, username: '', email: '', company: false})
